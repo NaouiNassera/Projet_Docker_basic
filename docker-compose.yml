@@ -1,0 +1,35 @@
+version : "3"
+
+services :
+  back :
+    image : nassera96naoui/back_office_image_3:1.1
+    ports :
+      - "5000:5000"
+    environment :
+      - VARIABLE_BACKEND=13
+    networks :
+      - network1
+    volumes:
+      - backoffice-volume:/app
+    restart :
+      always
+  front : 
+    image : nassera96naoui/front_office_image_3:1.1
+    ports :
+      - "3000:3000"
+    environment :
+      - REACT_APP_VARIABLE_FRONTEND=12
+    networks :
+      - network1
+    volumes:
+      - frontoffice-volume:/app
+    depends_on :
+      - back
+
+networks:
+  network1 :
+    driver : bridge 
+
+volumes:
+  frontoffice-volume:
+  backoffice-volume:
